@@ -1,0 +1,8 @@
+<p-sidebar [(visible)]="display">
+  <nav>
+    <a routerLink="/presentation" routerLinkActive="active">Présentation</a>
+    <a routerLink="/experiences" routerLinkActive="active">Expériences professionnelles</a>
+  </nav>
+</p-sidebar>
+
+<p-button type="text" (click)="display = true" icon="pi pi-plus" label="Show"></p-button>

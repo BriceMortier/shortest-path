@@ -1,0 +1,22 @@
+.game {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.board {
+  display: block;
+  margin-bottom: 2em;
+}
+
+.button {
+  margin-right: 1em;
+}
+
+.slider {
+  display: block;
+  width: 10em;
+}
+
+.node-type-option {
+  padding: 0.5em;
+}

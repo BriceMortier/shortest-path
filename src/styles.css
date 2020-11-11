@@ -1,0 +1,61 @@
+/* You can add global styles to this file, and also import other style files */
+
+.node-type-option .p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
+  display: none;
+}
+
+.node-type-option .p-radiobutton .p-radiobutton-box {
+  border-radius: 0%;
+}
+
+.node-type-option
+  .p-radiobutton
+  .p-radiobutton-box.p-highlight:not(.p-disabled) {
+  box-shadow: 0px 0px 4px 0.2rem #a6d5fa;
+}
+
+.node-type-option.departure .p-radiobutton .p-radiobutton-box,
+.node-type-option.departure
+  .p-radiobutton
+  .p-radiobutton-box:not(.p-disabled).p-focus,
+.node-type-option.departure
+  .p-radiobutton
+  .p-radiobutton-box.p-highlight:not(.p-disabled):hover {
+  background-color: green;
+}
+
+.node-type-option.arrival .p-radiobutton .p-radiobutton-box,
+.node-type-option.arrival
+  .p-radiobutton
+  .p-radiobutton-box.p-highlight:not(.p-disabled):hover {
+  background-color: red;
+}
+
+.node-type-option.wall .p-radiobutton .p-radiobutton-box,
+.node-type-option.wall
+  .p-radiobutton
+  .p-radiobutton-box.p-highlight:not(.p-disabled):hover {
+  background-color: black;
+}
+
+.node-type-option.fast .p-radiobutton .p-radiobutton-box,
+.node-type-option.fast
+  .p-radiobutton
+  .p-radiobutton-box:not(.p-disabled).p-focus,
+.node-type-option.fast
+  .p-radiobutton
+  .p-radiobutton-box:not(.p-disabled):hover {
+  border-color: violet;
+  background-color: transparent;
+}
+
+.node-type-option.slow .p-radiobutton .p-radiobutton-box,
+.node-type-option.slow
+  .p-radiobutton
+  .p-radiobutton-box:not(.p-disabled).p-focus,
+.node-type-option.slow
+  .p-radiobutton
+  .p-radiobutton-box:not(.p-disabled):hover {
+  border-color: steelblue;
+  background-color: transparent;
+}
