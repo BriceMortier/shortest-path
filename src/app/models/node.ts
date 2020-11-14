@@ -1,10 +1,10 @@
+import { NodeType } from './node-type';
+
 export interface Node {
-  visited: boolean;
-  previous: Node;
   distance: number;
   links: Node[];
-  onPath: boolean;
-  wall: boolean;
-  slow?: boolean;
-  fast?: boolean;
+  type: NodeType;
+  visited?: boolean;
+  previous?: Node;
+  onPath?: boolean;
 }

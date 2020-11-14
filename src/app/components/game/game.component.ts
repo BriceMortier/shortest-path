@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NodeType } from 'src/app/models/node-type';
 import { NodeService } from 'src/app/services/node.service';
 import { Node } from '../../models/node';
 
@@ -11,15 +12,20 @@ export class GameComponent implements OnInit {
 
   selectedNodeType = 'wall';
   simulationSpeed = 5;
-  currentDistance = 0;
-  iterationId = null;
+  iterationId;
+  buildPathId;
 
   nodes: Node[][] = [];
-  height = 20;
-  width = this.height * 2;
+  nodesToVisit: Node[] = [];
 
   start: Node;
   destination: Node;
+
+  boardSizeSmall = { name: 'S', value: 10 };
+  boardSizeMedium = { name: 'M', value: 30 };
+  boardSizeLarger = { name: 'L', value: 50 };
+  boardSizeOptions = [ this.boardSizeSmall, this.boardSizeMedium, this.boardSizeLarger ];
+  selectedBoardSize = this.boardSizeSmall;
 
   constructor(private nodeService: NodeService) { }
 
@@ -28,32 +34,41 @@ export class GameComponent implements OnInit {
   }
 
   private initNodes(): void {
-    this.nodes = this.nodeService.initNodes(this.height, this.width);
+    this.nodes = this.nodeService.initNodes(this.getHeight(), this.getWidth());
 
-    this.start = this.nodes[this.height * 0.2][this.width * 0.2];
-    this.destination = this.nodes[this.height * 0.8][this.width * 0.8];
+    this.start = this.nodes[this.getHeight() * 0.2][this.getWidth() * 0.2];
+    this.destination = this.nodes[this.getHeight() * 0.8][this.getWidth() * 0.8];
+  }
+
+  private getHeight(): number {
+    return this.selectedBoardSize.value;
+  }
+
+  private getWidth(): number {
+    return this.getHeight() * 2;
   }
 
   onClickFindPath(): void {
-    const nodesToVisit: Node[] = [this.start];
+    this.stop();
+    this.nodeService.clearNodes(this.nodes);
+    this.nodesToVisit = [this.start];
     this.start.distance = 0;
 
-    this.dijkstraIteration(this.start, this.destination, nodesToVisit, 0);
+    this.dijkstraIteration(this.start, this.destination, this.nodesToVisit, 0);
   }
 
   private dijkstraIteration(current: Node, destination: Node, nodesToVisit: Node[], previousDistance: number): void {
     this.iterationId = setTimeout(() => {
       const targetDistance = previousDistance + this.simulationSpeed;
       while (current !== null && current.distance <= targetDistance) {
-        this.currentDistance = current.distance;
         current.visited = true;
         nodesToVisit.splice(nodesToVisit.indexOf(current), 1);
 
         for (const node of current.links) {
           let distance = 5;
-          if (node.slow) {
+          if (node.type === NodeType.Slow) {
             distance = 25;
-          } else if (node.fast) {
+          } else if (node.type === NodeType.Fast) {
             distance = 1;
           }
           const alt = current.distance + distance;
@@ -73,7 +88,7 @@ export class GameComponent implements OnInit {
         const path: Node[] = [];
         let pathNode = destination;
 
-        while (pathNode !== null) {
+        while (pathNode) {
           path.push(pathNode);
           pathNode = pathNode.previous;
         }
@@ -84,7 +99,7 @@ export class GameComponent implements OnInit {
   }
 
   private buildPath(path: Node[]): void {
-    setTimeout(() => {
+    this.buildPathId = setTimeout(() => {
       const node = path.pop();
       if (node) {
         node.onPath = true;
@@ -101,9 +116,21 @@ export class GameComponent implements OnInit {
   }
 
   onClickReset(): void {
-    this.currentDistance = 0;
-    clearTimeout(this.iterationId);
+    this.stopAndInit();
+  }
+
+  onChangeBoardSize(): void {
+    this.stopAndInit();
+  }
+
+  private stopAndInit(): void {
+    this.stop();
     this.initNodes();
+  }
+
+  private stop(): void {
+    clearTimeout(this.iterationId);
+    clearTimeout(this.buildPathId);
   }
 
 }

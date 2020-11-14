@@ -7,6 +7,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { SliderModule } from 'primeng/slider';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -38,6 +39,7 @@ import { NodeComponent } from './components/node/node.component';
     SidebarModule,
     ButtonModule,
     RadioButtonModule,
+    SelectButtonModule,
     SliderModule
   ],
   providers: [],

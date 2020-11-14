@@ -1,13 +1,25 @@
 <div class="game">
-  <p>Let's play</p>
-    <p-slider class="slider" [animate]="true" [min]="1" [max]="10" [(ngModel)]="simulationSpeed"></p-slider>
-    <p-radioButton class="node-type-option departure" name="node-type" value="departure" label="Departure" [(ngModel)]="selectedNodeType"></p-radioButton>
-    <p-radioButton class="node-type-option arrival" name="node-type" value="arrival" label="Arrival" [(ngModel)]="selectedNodeType"></p-radioButton>
-    <p-radioButton class="node-type-option wall" name="node-type" value="wall" label="Wall" [(ngModel)]="selectedNodeType"></p-radioButton>
-    <p-radioButton class="node-type-option fast" name="node-type" value="fast" label="Fast" [(ngModel)]="selectedNodeType"></p-radioButton>
-    <p-radioButton class="node-type-option slow" name="node-type" value="slow" label="Slow" [(ngModel)]="selectedNodeType"></p-radioButton>
-    <span>Current distance: {{ currentDistance }}</span>
-  <app-board class="board" [nodes]="nodes" [nodeType]="selectedNodeType" [(start)]="start" [(destination)]="destination"></app-board>
-  <p-button class="button" label="Find path!" (onClick)="onClickFindPath()"></p-button>
-  <p-button class="button" label="Reset" (onClick)="onClickReset()"></p-button>
+  <h1>Dijkstra's Algorithm Visualizer</h1>
+  <div class="top-bar">
+    <div class="top-bar-container">
+      <p-radioButton class="node-type-option departure" name="node-type" value="departure" label="Departure" [(ngModel)]="selectedNodeType"></p-radioButton>
+      <p-radioButton class="node-type-option arrival" name="node-type" value="arrival" label="Arrival" [(ngModel)]="selectedNodeType"></p-radioButton>
+      <p-radioButton class="node-type-option wall" name="node-type" value="wall" label="Wall" [(ngModel)]="selectedNodeType"></p-radioButton>
+      <p-radioButton class="node-type-option fast" name="node-type" value="fast" label="Fast" [(ngModel)]="selectedNodeType"></p-radioButton>
+      <p-radioButton class="node-type-option slow" name="node-type" value="slow" label="Slow" [(ngModel)]="selectedNodeType"></p-radioButton>
+    </div>
+    <div class="top-bar-container">
+      <span>Board size</span>
+      <p-selectButton class="board-size-options" [options]="boardSizeOptions" optionLabel="name" [(ngModel)]="selectedBoardSize" (onChange)="onChangeBoardSize()"></p-selectButton>
+    </div>
+    <div class="top-bar-container">
+      <span>Simulation speed</span>
+      <p-slider class="slider" [animate]="true" [min]="1" [max]="10" [(ngModel)]="simulationSpeed"></p-slider>
+    </div>
+    <div class="top-bar-container right-buttons">
+      <p-button class="button-go" label="Go!" (onClick)="onClickFindPath()"></p-button>
+      <p-button icon="pi pi-undo" (onClick)="onClickReset()"></p-button>
+    </div>
+  </div>
+  <app-board class="board" [nodes]="nodes" [nodesToVisit]="nodesToVisit" [nodeType]="selectedNodeType" [(start)]="start" [(destination)]="destination"></app-board>
 </div>

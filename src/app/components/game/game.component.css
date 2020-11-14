@@ -6,17 +6,35 @@
 .board {
   display: block;
   margin-bottom: 2em;
+  border: #204c73 3px solid;
 }
 
-.button {
+.button-go {
   margin-right: 1em;
 }
 
-.slider {
+.top-bar-container {
+  display: inline-block;
+  padding: 0.5em;
+  vertical-align: top;
+  margin-right: 1em;
+}
+
+.top-bar-container.right-buttons {
+  float: right;
+}
+
+.top-bar-container .slider {
   display: block;
-  width: 10em;
+  width: 8em;
+  margin-top: 0.5em;
 }
 
 .node-type-option {
   padding: 0.5em;
+}
+
+.top-bar {
+  background-color: #204c73;
+  color: white;
 }

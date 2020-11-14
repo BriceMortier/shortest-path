@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { NodeType } from 'src/app/models/node-type';
 import { Node } from '../../models/node';
 
 @Component({
@@ -10,33 +11,39 @@ export class BoardComponent implements OnInit {
 
   @Input() nodeType: string;
   @Input() nodes: Node[][];
+  @Input() nodesToVisit: Node[];
 
   @Input() start: Node;
   @Input() destination: Node;
   @Output() startChange = new EventEmitter<Node>();
   @Output() destinationChange = new EventEmitter<Node>();
 
-  mouseDown = false;
+  isMouseDown = false;
+  nodeTypes = NodeType;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  onMouseDown(event): void {
+  onMouseDown(event, node: Node): void {
     event.preventDefault();
-    console.log('mouse down');
-    this.mouseDown = true;
+    this.isMouseDown = true;
+    this.changeNodeType(node);
   }
 
   onMouseUp(): void {
-    console.log('mouse up');
-    this.mouseDown = false;
+    this.isMouseDown = false;
   }
 
-  onMouseClick(node: Node): void {
-    console.log('mouse click');
-    if (!node.wall && node !== this.start && node !== this.destination) {
+  onMouseEnter(node: Node): void {
+    if (this.isMouseDown) {
+      this.changeNodeType(node);
+    }
+  }
+
+  private changeNodeType(node: Node): void {
+    if (node.type !== NodeType.Wall && node !== this.start && node !== this.destination) {
       switch (this.nodeType) {
         case 'departure':
           this.changeStart(node);
@@ -44,32 +51,21 @@ export class BoardComponent implements OnInit {
         case 'arrival':
           this.changeDestination(node);
           break;
-      }
-    }
-  }
-
-  onMouseOver(node: Node): void {
-    console.log('mouse over');
-    if (this.mouseDown && node !== this.start && node !== this.destination && !node.wall) {
-      switch (this.nodeType) {
         case 'wall':
           node.links.forEach(link => link.links.splice(link.links.indexOf(node), 1));
           node.links = [];
-          node.wall = true;
-          node.fast = node.slow = false;
+          node.type = NodeType.Wall;
           break;
         case 'fast':
-          node.fast = true;
-          node.slow = false;
+          node.type = NodeType.Fast;
           break;
         case 'slow':
-          node.slow = true;
-          node.fast = false;
+          node.type = NodeType.Slow;
           break;
       }
-
     }
   }
+
 
   private changeStart(start: Node): void {
     this.start = start;
