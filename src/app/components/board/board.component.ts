@@ -36,6 +36,21 @@ export class BoardComponent implements OnInit {
     this.isMouseDown = false;
   }
 
+  onTouchMove(event): void {
+    event.preventDefault();
+    const element = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY);
+
+    if (element && element.classList.contains('board-cell')) {
+      const dash = element.id.indexOf('-');
+      const rowIndex = element.id.slice(0, dash);
+      const nodeIndex = element.id.slice(dash + 1);
+
+      if (this.isMouseDown) {
+        this.changeNodeType(this.nodes[rowIndex][nodeIndex]);
+      }
+    }
+  }
+
   onMouseEnter(node: Node): void {
     if (this.isMouseDown) {
       this.changeNodeType(node);

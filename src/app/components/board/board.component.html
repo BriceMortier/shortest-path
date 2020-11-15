@@ -1,6 +1,7 @@
 <div (mouseleave)="onMouseUp()" class="board">
-  <div class="board-row" *ngFor='let nodesRow of nodes'>
-    <div *ngFor='let node of nodesRow' [ngClass]="{ 'path': node.onPath,
+  <div class="board-row" *ngFor='let row of nodes; let rowIndex=index'>
+    <div *ngFor='let node of row; let nodeIndex=index'
+      [id]="rowIndex + '-' + nodeIndex" [ngClass]="{ 'path': node.onPath,
                                                     'board-cell': true,
                                                     'visited': node.visited,
                                                     'slow': node.type === nodeTypes.Slow,
@@ -9,6 +10,7 @@
                                                     'arrival': destination === node,
                                                     'wall': node.type === nodeTypes.Wall,
                                                     'to-visit': nodesToVisit.indexOf(node) !== -1 }"
-      (mouseup)="onMouseUp()" (mousedown)="onMouseDown($event, node)" (mouseenter)="onMouseEnter(node)"></div>
+      (mousedown)="onMouseDown($event, node)" (mouseenter)="onMouseEnter(node)" (mouseup)="onMouseUp()"
+      (touchstart)="onMouseDown($event, node)" (touchmove)="onTouchMove($event)"  (touchend)="onMouseUp()"></div>
   </div>
 </div>
