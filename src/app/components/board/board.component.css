@@ -13,10 +13,6 @@
   border: #0000000f 1px solid;
 }
 
-.wall {
-  background-color: black;
-}
-
 .to-visit {
   background-color: cadetblue;
 }
@@ -35,6 +31,10 @@
 
 .board .board-row .board-cell.fast {
   border-color: violet;
+}
+
+.wall {
+  background-color: black;
 }
 
 .departure {
