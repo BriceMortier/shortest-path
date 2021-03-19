@@ -12,8 +12,6 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
-import { PresentationComponent } from './components/presentation/presentation.component';
-import { ExperiencesComponent } from './components/experiences/experiences.component';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { BoardComponent } from './components/board/board.component';
 import { GameComponent } from './components/game/game.component';
@@ -23,8 +21,6 @@ import { NodeComponent } from './components/node/node.component';
   declarations: [
     AppComponent,
     TopBarComponent,
-    PresentationComponent,
-    ExperiencesComponent,
     SideBarComponent,
     BoardComponent,
     GameComponent,
